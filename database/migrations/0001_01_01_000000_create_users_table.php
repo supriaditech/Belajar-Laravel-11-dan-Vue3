@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
+    /**  
+     * Run the migrations.  
      */
     public function up(): void
     {
@@ -15,20 +15,22 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable(); // Kolom untuk verifikasi email  
             $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
-            $table->timestamps();
+            $table->rememberToken(); // Kolom untuk token "remember me"  
+            $table->foreignId('current_team_id')->nullable(); // Kolom untuk tim saat ini (jika menggunakan Jetstream)  
+            $table->string('profile_photo_path', 2048)->nullable(); // Kolom untuk foto profil  
+            $table->timestamps(); // Kolom untuk timestamps created_at dan updated_at  
         });
 
+        // Migrasi untuk tabel password_reset_tokens  
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // Migrasi untuk tabel sessions  
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -39,8 +41,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
+    /**  
+     * Reverse the migrations.  
      */
     public function down(): void
     {
